@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,12 @@ public class UserEntity {
     @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false, updatable = false)
+    LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)      //PostEntity 에서 참조하고 있음
     @ToString.Exclude
     @Builder.Default
@@ -69,6 +76,11 @@ public class UserEntity {
     @Builder.Default
     private List<PostLikeEntity> postLikeEntities = new ArrayList<>();
 
+    @Builder
+    public UserEntity(Long id, String email) {
+        this.idx = id;
+        this.email = email;
+    }
 }
 
 /*
