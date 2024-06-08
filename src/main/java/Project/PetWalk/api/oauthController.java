@@ -31,6 +31,11 @@ public class oauthController {
         return "index";
     }
 
+    @GetMapping("/loginform")
+    public String login() {
+        return "loginForm";
+    }
+
     @GetMapping("/oauth/kakao")
     @ResponseBody
     public String kakaoOauth(@RequestParam("code") String code) {

@@ -13,7 +13,7 @@ public class NaverTokenJsonData {
     private final WebClient webClient;
     private static final String TOKEN_URI = "https://nid.naver.com/oauth2.0/token";
     private static final String CLIENT_ID = "GAXhZuC_2gN1thw8fw6X";
-    private static final String REDIRECT_URI = "http://localhost:8080/oauth/naver";
+    private static final String REDIRECT_URI = "https://localhost:8080/oauth/naver";
 
     public NaverTokenResponse getToken(String code) {
         String uri = TOKEN_URI + "?client_id=" + CLIENT_ID + "&REDIRECT_URI=" + REDIRECT_URI + "&code=" + code;
