@@ -9,7 +9,7 @@ import org.springframework.test.annotation.Rollback;
 
 
 @SpringBootTest
-class UserRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
