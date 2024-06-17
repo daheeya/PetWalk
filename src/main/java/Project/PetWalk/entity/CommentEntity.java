@@ -34,15 +34,10 @@ public class CommentEntity {
     @JoinColumn(name = "user_idx")
     private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "commentEntity", orphanRemoval = true, cascade = CascadeType.PERSIST)            // CommentLikeEntity 에서 참조하고 있음
+    @OneToMany(mappedBy = "commentEntity", orphanRemoval = true)            // CommentLikeEntity 에서 참조하고 있음
     @ToString.Exclude
     @Builder.Default
     private List<CommentLikeEntity> commentLikeEntities = new ArrayList<>();
-
-    // 좋아요 추가
-    public void addCommentLike(CommentLikeEntity commentLikeEntity) {
-        commentLikeEntities.add(commentLikeEntity);
-    }
 }
 
 /*

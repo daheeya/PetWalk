@@ -10,7 +10,7 @@ public class DefaultListener {
     @PrePersist
     public void prePersist(Object o) {
         if (o instanceof IEntityAdapter) {
-            ((IEntityAdapter) o).setCreateAt(LocalDateTime.now());
+            ((IEntityAdapter) o).setCrateAt(LocalDateTime.now());
             ((IEntityAdapter) o).setUpdateAt(LocalDateTime.now());
         }
     }

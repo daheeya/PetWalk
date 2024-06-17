@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @EntityListeners(value = DefaultListener.class)
@@ -22,9 +20,5 @@ public class UserImgEntity extends BaseImgEntity{
     @JoinColumn(name = "user_idx")
     private UserEntity userEntity;
 
-    @Override
-    public void setCreateAt(LocalDateTime o) {
-
-    }
 }
 
