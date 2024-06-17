@@ -76,6 +76,11 @@ public class UserEntity {
     @Builder.Default
     private List<PostLikeEntity> postLikeEntities = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
+    @ToString.Exclude
+    @Builder.Default
+    private List<WalkEntity> walkEntities = new ArrayList<>();
+
     @Builder
     public UserEntity(Long id, String email) {
         this.idx = id;
