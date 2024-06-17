@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,35 +15,45 @@ import java.util.List;
 @Table(name = "user")
 @Entity
 public class UserEntity {
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @Getter
+    @Setter
     @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(length = 50, nullable = false)
+    @Setter
+    @Getter
+    @Column(length = 50, nullable = true)
     private int age;
 
-    @Column(nullable = false, unique = true)
+    @Setter
+    @Getter
+    @Column(nullable = true, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Setter
+    @Getter
+    @Column(nullable = true, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true)
+    @Setter
+    @Getter
+    @Column(nullable = true, unique = true)
     private String nickName;
 
+    @Setter
+    @Getter
     private int point;
 
-    @Column(nullable = false)
+    @Setter
+    @Getter
+    @Column(nullable = true)
     private String address;
-
-    @Column(nullable = false, updatable = false)
-    LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)      //PostEntity 에서 참조하고 있음
     @ToString.Exclude
@@ -75,6 +84,7 @@ public class UserEntity {
     @ToString.Exclude
     @Builder.Default
     private List<PostLikeEntity> postLikeEntities = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
     @ToString.Exclude

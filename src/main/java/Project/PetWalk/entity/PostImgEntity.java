@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @EntityListeners(value = DefaultListener.class)
@@ -19,5 +21,18 @@ public class PostImgEntity extends BaseImgEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)  //PostEntity.idx 를 참조하고 있음
     @JoinColumn(name = "post_idx")
     private PostEntity postEntity;
+
+    public PostEntity getPostEntity() {
+        return postEntity;
+    }
+
+    public void setPostEntity(PostEntity postEntity) {
+        this.postEntity = postEntity;
+    }
+
+    @Override
+    public void setCreateAt(LocalDateTime o) {
+
+    }
 }
 

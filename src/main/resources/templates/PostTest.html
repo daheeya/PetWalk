@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Details</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Open Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        #add-image-btn {
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+        }
+        input, button {
+            height: 45px;
+            border-radius: 5px;
+        }
+        .small-input {
+            width: 25%; /* User ID 부분 조금 더 크게 */
+        }
+        .large-textarea {
+            height: 600px; /* 기본 높이의 10배 */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Post Details</h1>
+    <form action="/page/post/dto/test" method="post">
+        <div class="form-group">
+            <input id="userIdx" name="userIdx" type="number" class="form-control small-input" placeholder="User ID">
+        </div>
+        <div class="form-group">
+            <input id="title" name="title" type="text" class="form-control" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <textarea id="content" name="content" class="form-control large-textarea" placeholder="Content"></textarea>
+        </div>
+        <div id="image-inputs" class="form-group">
+            <input type="text" name="postImgList" class="form-control" placeholder="Image URL">
+        </div>
+        <button type="button" id="add-image-btn" class="btn btn-primary btn-block">+ Add Image</button>
+        <input type="submit" class="btn btn-success btn-block" value="Submit">
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#add-image-btn').click(function() {
+            $('#image-inputs').append('<input type="text" name="postImgList" class="form-control mt-2" placeholder="Image URL">');
+        });
+    });
+</script>
+</body>
+</html>
