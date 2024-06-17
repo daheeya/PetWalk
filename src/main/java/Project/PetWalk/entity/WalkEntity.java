@@ -46,12 +46,10 @@ public class WalkEntity {
     @Column
     private MultiPoint path;  // TYPENAME_MULTIPOINT
 
-    @Column(name = "user_idx")
     @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     private UserEntity userEntity;
 
-    @Column(name = "pet_idx")
     @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_idx")
     private PetEntity petEntity;
