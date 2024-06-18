@@ -31,6 +31,14 @@ public class DailyMissionEntity {
     @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private Boolean status;
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 

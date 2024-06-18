@@ -36,6 +36,13 @@ public class UserDailyMissionEntity {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime completedAt;
 
+    @PrePersist
+    public void prePersist() {
+        if (isCompleted() && this.completedAt == null) {
+            this.completedAt = LocalDateTime.now();
+        }
+    }
+
     @PreUpdate
     public void updateCompletedAt() {
         if (this.completedAt == null && isCompleted()) {
