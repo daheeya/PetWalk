@@ -17,8 +17,8 @@ public class UserRepositoryTest {
     @Transactional
     @Rollback(value = false)
    void test(){
-       var user1 = UserEntity.builder().idx(1L).name("cooper").age(23)
-               .address("daegu").email("cooper091677@gmail.com").phoneNumber("010-1234-5678").nickName("redia").build();
+       var user1 = UserEntity.builder().idx(1L).nickname("cooper")
+               .address("daegu").email("cooper091677@gmail.com").phoneNumber("010-1234-5678").build();
         System.out.println();
        userRepository.save(user1);
    }
