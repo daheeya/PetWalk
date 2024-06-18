@@ -1,5 +1,7 @@
 package Project.PetWalk.entity;
 
+import Project.PetWalk.entity.listener.IAuditable;
+import Project.PetWalk.entity.listener.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,30 +16,26 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "user")
+@EntityListeners(value = {UserEntityListener.class})
 @Entity
-public class UserEntity {
+public class UserEntity implements IAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column(length = 50, nullable = false)
-    private String name;
-
-    @Column(length = 50, nullable = false)
-    private int age;
+    private String nickname;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true)
-    private String nickName;
 
     private int point;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String address;
 
     @Column(nullable = false, updatable = false)
@@ -76,12 +74,10 @@ public class UserEntity {
     @Builder.Default
     private List<PostLikeEntity> postLikeEntities = new ArrayList<>();
 
-    @Builder
-    public UserEntity(Long id, String email) {
-        this.idx = id;
-        this.email = email;
-    }
+    @Transient
+    private boolean isValid;
 }
+
 
 /*
 table user {
