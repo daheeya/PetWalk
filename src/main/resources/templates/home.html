@@ -21,7 +21,7 @@
         }
 
         img.central-image {
-            max-width: 200px; /* 이미지 최대 너비 설정 */
+            max-width: 180px; /* 이미지 최대 너비 설정 */
             height: auto; /* 비율 유지 */
             margin-bottom: 20px; /* 이미지 아래 여백 추가 */
         }
@@ -33,15 +33,13 @@
         }
 
         .login-buttons {
-            display: flex; /* 버튼을 가로로 정렬 */
-            justify-content: center; /* 가운데 정렬 */
             margin-top: 20px; /* 위 여백 추가 */
-            flex-wrap: wrap; /* 요소들을 줄 바꿈 */
         }
 
         .login-buttons a {
-            display: inline-block; /* 인라인 블록 요소로 지정 */
-            margin: 10px; /* 버튼 주위 여백 추가 */
+            display: block; /* 블록 요소로 지정하여 세로로 정렬 */
+            margin: 0 auto; /* 버튼 주위 여백 제거 및 가운데 정렬 */
+            text-align: center; /* 텍스트 가운데 정렬 */
         }
 
         .login-button {
@@ -65,7 +63,7 @@
     <h2>펫워크</h2>
     <div class="login-buttons">
         <a href="/oauth/naver/login" class="login-button">
-            <img src="/image/btn_naver_login.png" alt="네이버 로그인" style="width: 80px; height: auto;">
+            <img src="/image/btnG.naver_login.png" alt="네이버 로그인" style="width: 80px; height: auto;">
         </a>
         <a href="/oauth/kakao/login" class="login-button">
             <img src="/image/kakao_login.png" alt="카카오 로그인" style="width: 80px; height: auto;">

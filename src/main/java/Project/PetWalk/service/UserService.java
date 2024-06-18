@@ -35,7 +35,7 @@ public class UserService {
         String phon_number = naverUserInfo.getResponse().getMobile();
 
         UserEntity userEntity = UserEntity.builder()
-                .name(nickname)
+                .nickname(nickname)
                 .email(email)
                 .phoneNumber(phon_number)
                 .createdAt(LocalDateTime.now())

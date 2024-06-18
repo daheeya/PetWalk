@@ -23,8 +23,8 @@ public class UserEntity implements IAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column(length = 50, nullable = true)
-    private String name;
+    @Column(length = 50, nullable = false)
+    private String nickname;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -32,8 +32,6 @@ public class UserEntity implements IAuditable {
     @Column(nullable = true, unique = true)
     private String phoneNumber;
 
-    @Column(length = 50, nullable = true)
-    private String nickname;
 
     private int point;
 
@@ -78,6 +76,11 @@ public class UserEntity implements IAuditable {
 
     @Transient
     private boolean isValid;
+
+    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
+    @ToString.Exclude
+    @Builder.Default
+    private List<WalkEntity> walkEntities = new ArrayList<>();
 }
 
 
