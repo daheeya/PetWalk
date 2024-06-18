@@ -35,5 +35,4 @@ public class PageController {
         model.addAttribute("posts", posts);
         return "Main";
     }
-
 }

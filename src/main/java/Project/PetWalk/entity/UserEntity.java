@@ -82,17 +82,3 @@ public class UserEntity implements IAuditable {
     @Builder.Default
     private List<WalkEntity> walkEntities = new ArrayList<>();
 }
-
-
-/*
-table user {
-  idx bigint [pk, not null, increment]
-  name varchar(50) [not null]
-  age int [not null]
-  email varchar(100) [not null, unique]
-  phone_number varchar(50) [not null, unique]
-  nickname varchar(50)
-  point int
-  address varchar(100) [not null]
-}
- */

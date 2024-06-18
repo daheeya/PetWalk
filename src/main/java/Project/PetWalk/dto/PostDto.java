@@ -45,6 +45,4 @@ public class PostDto {
         this.title = title;
         this.createAt = String.valueOf(createAt);
     }
-
-
 }
