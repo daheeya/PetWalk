@@ -1,9 +1,12 @@
 package Project.PetWalk.entity;
 
+import Project.PetWalk.entity.listener.IAuditable;
+import Project.PetWalk.entity.listener.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,47 +16,35 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "user")
+@EntityListeners(value = {UserEntityListener.class})
 @Entity
-public class UserEntity {
-    @Getter
-    @Setter
+public class UserEntity implements IAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Getter
-    @Setter
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = true)
     private String name;
 
-    @Setter
-    @Getter
-    @Column(length = 50, nullable = true)
-    private int age;
-
-    @Setter
-    @Getter
-    @Column(nullable = true, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Setter
-    @Getter
     @Column(nullable = true, unique = true)
     private String phoneNumber;
 
-    @Setter
-    @Getter
-    @Column(nullable = true, unique = true)
-    private String nickName;
+    @Column(length = 50, nullable = true)
+    private String nickname;
 
-    @Setter
-    @Getter
     private int point;
 
-    @Setter
-    @Getter
     @Column(nullable = true)
     private String address;
+
+    @Column(nullable = false, updatable = false)
+    LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)      //PostEntity 에서 참조하고 있음
     @ToString.Exclude
@@ -85,18 +76,10 @@ public class UserEntity {
     @Builder.Default
     private List<PostLikeEntity> postLikeEntities = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
-    @ToString.Exclude
-    @Builder.Default
-    private List<WalkEntity> walkEntities = new ArrayList<>();
-
-    @Builder
-    public UserEntity(Long id, String email) {
-        this.idx = id;
-        this.email = email;
-    }
+    @Transient
+    private boolean isValid;
 }
+
 
 /*
 table user {

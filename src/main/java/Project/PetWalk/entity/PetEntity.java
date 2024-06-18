@@ -33,11 +33,6 @@ public class PetEntity {
     @ToString.Exclude
     @Builder.Default
     private List<PetImgEntity> petImgEntities = new ArrayList<>();
-
-    @OneToMany(mappedBy = "petEntity", orphanRemoval = true)
-    @ToString.Exclude
-    @Builder.Default
-    private List<WalkEntity> walkEntities = new ArrayList<>();
 }
 
 /*
