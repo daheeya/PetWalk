@@ -76,6 +76,11 @@ public class UserEntity implements IAuditable {
 
     @Transient
     private boolean isValid;
+
+    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
+    @ToString.Exclude
+    @Builder.Default
+    private List<WalkEntity> walkEntities = new ArrayList<>();
 }
 
 
