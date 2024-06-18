@@ -25,8 +25,8 @@ naver:
     api: https://openapi.naver.com
 
   redirect-url: http://localhost:8080/oauth/naver
-  id: jkYtGfkCB_X99pbuH57T
-  secret: 2Amacbxciv
+  id: RjDcYhXTVT0js2LE54Yh
+  secret: faZkrvWzzm
   authorization-grant-type: authorization_code
   scope: name,email,profile_image,mobile
   client-name: Naver
