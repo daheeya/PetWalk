@@ -31,6 +31,13 @@
         .post-item:last-child {
             border-bottom: none;
         }
+        .post-item a {
+            color: #000;
+            text-decoration: none;
+        }
+        .post-item a:hover {
+            text-decoration: underline;
+        }
         .pagination {
             justify-content: center;
             margin-top: 20px;
@@ -48,15 +55,17 @@
 
     <!-- 글쓰기 버튼 추가 -->
     <div class="write-button">
-        <button onclick="location.href='post/dto'" class="btn btn-primary">글쓰기</button>
+        <button onclick="location.href='/page/post/write'" class="btn btn-primary">글쓰기</button>
     </div>
 
     <div id="posts">
         <th:block th:each="post : ${posts}">
             <div class="post-item">
-                <h2 th:text="${post.title}"></h2>
-                <p>작성자: <span th:text="${post.userIdx}"></span></p>
-                <p>작성시간:<span th:text="${post.createAt}"></span></p>
+                <a th:href="@{/page/post/write/content(postIdx=${post.idx})}">
+                    <h2 th:text="${post.title}"></h2>
+                    <p>작성자: <span th:text="${post.userIdx}"></span></p>
+                    <p>작성시간:<span th:text="${post.createAt}"></span></p>
+                </a>
             </div>
         </th:block>
     </div>

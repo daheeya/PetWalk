@@ -21,7 +21,7 @@ public class ApiController {
     //private final UserService userService;
     private final PostService postService;
 
-    @PostMapping("/post/write") //게시물 작성
+    @PostMapping("/page/post/write") //게시물 작성
     public PostDto writePost(@RequestBody PostDto dto) {
         return postService.writePost(dto);
     }
