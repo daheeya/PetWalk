@@ -16,16 +16,27 @@ import java.util.List;
 @Slf4j
 public class PageController {
     private final PostService postService;
-    @GetMapping("/post/dto")
+
+    @GetMapping("/post/write")
     public String postDto() {
         return "PostTest";
     }
 
-    @PostMapping("/post/dto/test")
+    @PostMapping("/post/write/content")
     public String postTest(@ModelAttribute PostDto postDto, Model model) {
         postService.writePost(postDto);
         log.info("{}", postDto);
         model.addAttribute("dto", postDto);
+        return "PostDtoPage";
+    }
+
+    @GetMapping("/post/write/content")
+    public String getPostContent(@RequestParam("postIdx") Long postIdx, Model model) {
+        PostDto post = postService.getPostById(postIdx);
+        if (post == null) {
+            throw new RuntimeException("Post not found with id: " + postIdx);
+        }
+        model.addAttribute("post", post);
         return "PostDtoPage";
     }
 

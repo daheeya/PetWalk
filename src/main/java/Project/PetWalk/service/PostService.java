@@ -56,7 +56,6 @@ public class PostService {
         return TagEntity.builder().postEntity(post).keyword(keyword).build();
     }
 
-
     @Transactional
     public CommentDto writeComment(CommentDto dto) { // 댓글 완성
         userRepository.findById(dto.getUserIdx()).ifPresent(userEntity ->{
@@ -110,16 +109,24 @@ public class PostService {
         return CommentDto.builder().likeCount(commentEntity.getCommentLikeEntities().size())
                 .content(commentEntity.getContent()).build();
     }
-//
-    //
 
     public List<PostDto> getAllPosts() {
         List<PostEntity> postEntities = postRepository.findAll();
         return postEntities.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    private PostDto convertToDto(PostEntity postEntity) {
-        return new PostDto(postEntity.getUserEntity().getIdx(), postEntity.getTitle(), postEntity.getCreateAt());
+    @Transactional
+    public PostDto getPostById(Long id) {
+        PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
+        return convertToDto(postEntity);
     }
 
+    private PostDto convertToDto(PostEntity postEntity) {
+        return PostDto.builder().idx(postEntity.getIdx())
+                        .title(postEntity.getTitle())
+                        .userIdx(postEntity.getUserEntity().getIdx())
+                        .content(postEntity.getContent())
+                        .createAt(String.valueOf(postEntity.getCreateAt()))
+                        .build();
+    }
 }
