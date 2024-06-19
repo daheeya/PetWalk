@@ -27,7 +27,7 @@ public class PageController {
         postService.writePost(postDto);
         log.info("{}", postDto);
         model.addAttribute("dto", postDto);
-        return "PostDtoPage";
+        return "afterwrite";
     }
 
     @GetMapping("/post/write/content")

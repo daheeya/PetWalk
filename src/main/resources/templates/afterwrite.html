@@ -39,13 +39,13 @@
 </head>
 <body>
 <div class="container">
-    <div class="content-box" th:if="${post != null}">
-        <h1 th:text="${post.title}">Post Details</h1>
-        <p><strong>작성자:</strong> <span th:text="${post.userIdx}"></span></p>
-<!--        <p><strong>제목:</strong> <span th:text="${post.title}"></span></p>-->
-        <p><strong>내용:</strong> <span th:text="${post.content}"></span></p>
+    <div class="content-box" th:if="${dto != null}">
+        <h1 th:text="${dto.title}">Post Details</h1>
+        <p><strong>작성자:</strong> <span th:text="${dto.userIdx}"></span></p>
+<!--        <p><strong>제목:</strong> <span th:text="${dto.title}"></span></p>-->
+        <p><strong>내용:</strong> <span th:text="${dto.content}"></span></p>
     </div>
-    <div class="content-box" th:if="${post == null}">
+    <div class="content-box" th:if="${dto == null}">
         <h1>Post Details</h1>
         <p>포스트를 찾을 수 없습니다.</p>
     </div>
