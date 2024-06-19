@@ -20,7 +20,7 @@ public class NaverUserInfo {
     @Data
     @Builder
     public static class Response {
-
+        private String nickname;
         private String name;
         private String email;
         private String mobile;

@@ -19,6 +19,7 @@ import java.io.IOException;
 @RequestMapping(path = "/oauth")
 @Controller
 public class KakaoLoginController {
+
     private final KakaoLoginService kakaoLoginService;
     private final UserService userService;
 
