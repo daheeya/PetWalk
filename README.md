@@ -4,7 +4,7 @@ project of petwalk application
 http://localhost:8080/page/main
 
 2. 게시글 작성
-http://localhost:8080/page/post/dto
+http://localhost:8080/page/post/write
 
 
 3. 로그인페이지 
