@@ -27,6 +27,10 @@ public class UserService {
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
+    @Transactional(readOnly = true)
+    public boolean isUserExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
     @Transactional
     public UserEntity saveNaverUserInfo(NaverUserInfo naverUserInfo) {

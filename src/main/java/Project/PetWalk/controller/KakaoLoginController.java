@@ -5,7 +5,6 @@ import Project.PetWalk.dto.LoginParamsDto;
 import Project.PetWalk.service.KakaoLoginService;
 import Project.PetWalk.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +24,6 @@ public class KakaoLoginController {
 
     private final KakaoLoginService kakaoLoginService;
     private final UserService userService;
-//    private final SessionManager sessionManager;
 
     @GetMapping("/home")
     public String home() {
@@ -48,22 +46,27 @@ public class KakaoLoginController {
         KakaoUserInfo kakaoUserInfo = kakaoLoginService.findMe(token);
 
         if (kakaoUserInfo != null) {
-            userService.saveKakaoUserInfo(kakaoUserInfo);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "/oauth/map"); // 로그인 성공 후 mainpage로 리다이렉트
-            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            String email = kakaoUserInfo.getKakaoAccount().getEmail();
+            if (userService.isUserExists(email)) {
+                // 유저가 이미 존재하면 바로 map 페이지로 리다이렉트
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Location", "/oauth/map");
+                return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            } else {
+                // 유저가 존재하지 않으면 정보 저장 후 map 페이지로 리다이렉트
+                userService.saveKakaoUserInfo(kakaoUserInfo);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Location", "/oauth/map");
+                return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            }
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Kakao 사용자 정보를 가져오지 못했습니다.");
         }
     }
+
     @GetMapping("/map")
-    public String mainpage(HttpSession session) {
-//        Object loginUser = sessionManager.getLoginUser(session);
-//        if (loginUser == null) {
-//            return "redirect:/oauth/home"; // 로그인되지 않은 상태라면 home으로 리다이렉트
-//        }
-        return "walk/map"; // 로그인된 상태라면 map 페이지로 이동
+    public String mainPage() {
+        return "walk/map";
     }
 }

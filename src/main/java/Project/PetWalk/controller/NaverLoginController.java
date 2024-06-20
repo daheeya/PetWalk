@@ -1,10 +1,14 @@
 package Project.PetWalk.controller;
 
 import Project.PetWalk.dto.LoginParamsDto;
+import Project.PetWalk.dto.NaverUserInfo;
 import Project.PetWalk.service.NaverLoginService;
+import Project.PetWalk.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +23,8 @@ import java.io.IOException;
 public class NaverLoginController {
 
     private final NaverLoginService oAuthLoginService;
+    private final UserService userService;
+
     // html단에서 naver login 버튼 선택시 적용되는 URI
     @GetMapping("/naver/login")
     public void naverLogin(HttpServletResponse response) throws IOException {
@@ -27,16 +33,28 @@ public class NaverLoginController {
 
     // naver redirect url
     @GetMapping(path = "/naver")
-    public ResponseEntity callbackNaver(LoginParamsDto loginParamsDto) {
+    public ResponseEntity<String> callbackNaver(LoginParamsDto loginParamsDto) {
         log.info("code={}, state={}", loginParamsDto.getCode(), loginParamsDto.getState());
-        var token = oAuthLoginService.requestAccessToken(loginParamsDto);
+        String token = oAuthLoginService.requestAccessToken(loginParamsDto);
+        NaverUserInfo naverUserInfo = oAuthLoginService.findMe(token);
 
-        //FindMeDto.Response res = oAuthLoginService.findMe(token).getResponse();
-        // service단에서 repository 주입받아서 EMAIL,NICKNAME 저장
-//        userService.save(UserDto.builder().name(res.getNickname()).email(res.getEmail()).build());
-        return ResponseEntity.ok(oAuthLoginService.findMe(token));
-
-        //return ResponseEntity.ok("test");
+        if (naverUserInfo != null) {
+            String email = naverUserInfo.getResponse().getEmail();
+            if (userService.isUserExists(email)) {
+                // 유저가 이미 존재하면 바로 map 페이지로 리다이렉트
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Location", "/oauth/map");
+                return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            } else {
+                // 유저가 존재하지 않으면 정보 저장 후 map 페이지로 리다이렉트
+                userService.saveNaverUserInfo(naverUserInfo);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Location", "/oauth/map");
+                return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Naver 사용자 정보를 가져오지 못했습니다.");
+        }
     }
-
 }
