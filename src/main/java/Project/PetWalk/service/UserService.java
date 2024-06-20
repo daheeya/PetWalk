@@ -30,7 +30,7 @@ public class UserService {
 
     @Transactional
     public UserEntity saveNaverUserInfo(NaverUserInfo naverUserInfo) {
-        String nickname = naverUserInfo.getResponse().getNickname();
+        String nickname = naverUserInfo.getResponse().getName();
         String email = naverUserInfo.getResponse().getEmail();
         String phon_number = naverUserInfo.getResponse().getMobile();
 

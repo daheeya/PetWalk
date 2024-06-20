@@ -38,4 +38,5 @@ public class NaverLoginController {
 
         //return ResponseEntity.ok("test");
     }
+
 }

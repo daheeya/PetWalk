@@ -63,24 +63,6 @@ public class KakaoLoginService {
         return response.getAccessToken();
     }
 
-
-//    public KakaoUserInfo findMe(String accessToken) {
-//        String keys = "[\"kakao_account.profile\",\"kakao_account.email\"]";
-//        var uri = UriComponentsBuilder.fromUriString("https://kapi.kakao.com/v2/user/me")
-//                .queryParam("property_keys", keys)
-//                .encode()
-//                .build().toUri();
-//
-//
-//        var requestEntity = RequestEntity.get(uri)
-//                .header("Authorization", "Bearer " + accessToken)
-//                .build();
-//
-//        var res = restTemplate.exchange(requestEntity, KakaoUserInfo.class);
-//
-//        return res.getBody();
-//    }
-
     public KakaoUserInfo findMe(String accessToken) {
         String keys = "[\"kakao_account.profile\",\"kakao_account.email\"]";
         var uri = UriComponentsBuilder.fromUriString("https://kapi.kakao.com/v2/user/me")

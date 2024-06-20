@@ -1,11 +1,14 @@
 package Project.PetWalk.controller;
 
+import Project.PetWalk.dto.KakaoUserInfo;
 import Project.PetWalk.dto.LoginParamsDto;
 import Project.PetWalk.service.KakaoLoginService;
 import Project.PetWalk.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ public class KakaoLoginController {
 
     private final KakaoLoginService kakaoLoginService;
     private final UserService userService;
+//    private final SessionManager sessionManager;
 
     @GetMapping("/home")
     public String home() {
@@ -37,20 +41,29 @@ public class KakaoLoginController {
     }
     // Kakao redirect URL
 
-
     @GetMapping(path = "/kakao")
-    public ResponseEntity callbackKakao(LoginParamsDto loginParamsDto) {
+    public ResponseEntity<String> callbackKakao(LoginParamsDto loginParamsDto) {
         log.info("code={}, state={}", loginParamsDto.getCode(), loginParamsDto.getState());
-        var token = kakaoLoginService.requestAccessToken(loginParamsDto);
-        var kakaoUserInfo = kakaoLoginService.findMe(token);
-        // Kakao 사용자 정보가 null이 아닌 경우, UserService를 통해 UserEntity로 저장합니다.
+        String token = kakaoLoginService.requestAccessToken(loginParamsDto);
+        KakaoUserInfo kakaoUserInfo = kakaoLoginService.findMe(token);
+
         if (kakaoUserInfo != null) {
             userService.saveKakaoUserInfo(kakaoUserInfo);
-            return ResponseEntity.ok("Kakao 로그인 성공!");
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/oauth/map"); // 로그인 성공 후 mainpage로 리다이렉트
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Kakao 사용자 정보를 가져오지 못했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Kakao 사용자 정보를 가져오지 못했습니다.");
         }
-//        oAuthLoginService.findMe(token);
-//        return null;
+    }
+    @GetMapping("/map")
+    public String mainpage(HttpSession session) {
+//        Object loginUser = sessionManager.getLoginUser(session);
+//        if (loginUser == null) {
+//            return "redirect:/oauth/home"; // 로그인되지 않은 상태라면 home으로 리다이렉트
+//        }
+        return "walk/map"; // 로그인된 상태라면 map 페이지로 이동
     }
 }
