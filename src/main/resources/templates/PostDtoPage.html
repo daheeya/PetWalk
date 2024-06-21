@@ -44,6 +44,10 @@
 </head>
 <body>
 <div class="container">
+    <!-- 뒤로가기 버튼 추가 -->
+    <div class="back-button">
+        <button onclick="location.href='/page/main'" class="btn btn-primary">뒤로가기</button>
+    </div>
 
     <form action="/page/post/update" method="get">
         <div class="content-box" th:if="${post != null}">
