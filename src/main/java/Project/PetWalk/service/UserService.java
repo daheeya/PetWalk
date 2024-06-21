@@ -2,6 +2,7 @@ package Project.PetWalk.service;
 
 import Project.PetWalk.dto.KakaoUserInfo;
 import Project.PetWalk.dto.NaverUserInfo;
+import Project.PetWalk.dto.OAuthProvider;
 import Project.PetWalk.entity.UserEntity;
 import Project.PetWalk.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,8 @@ public class UserService {
         return userRepository.findAll();
     }
     @Transactional(readOnly = true)
-    public boolean isUserExists(String email) {
-        return userRepository.existsByEmail(email);
+    public boolean isUserExists(String email, OAuthProvider oauthProvider) {
+        return userRepository.existsByEmailAndOauthProvider(email, oauthProvider);
     }
 
     @Transactional
@@ -42,6 +43,7 @@ public class UserService {
                 .nickname(nickname)
                 .email(email)
                 .phoneNumber(phon_number)
+                .oauthProvider(OAuthProvider.NAVER)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -59,6 +61,7 @@ public class UserService {
         UserEntity userEntity = UserEntity.builder()
                 .nickname(nickname)
                 .email(email)
+                .oauthProvider(OAuthProvider.KAKAO)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

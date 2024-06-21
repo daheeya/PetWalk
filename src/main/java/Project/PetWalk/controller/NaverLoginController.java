@@ -2,6 +2,7 @@ package Project.PetWalk.controller;
 
 import Project.PetWalk.dto.LoginParamsDto;
 import Project.PetWalk.dto.NaverUserInfo;
+import Project.PetWalk.dto.OAuthProvider;
 import Project.PetWalk.service.NaverLoginService;
 import Project.PetWalk.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,7 +41,7 @@ public class NaverLoginController {
 
         if (naverUserInfo != null) {
             String email = naverUserInfo.getResponse().getEmail();
-            if (userService.isUserExists(email)) {
+            if (userService.isUserExists(email, OAuthProvider.NAVER)) {
                 // 유저가 이미 존재하면 바로 map 페이지로 리다이렉트
                 HttpHeaders headers = new HttpHeaders();
                 headers.add("Location", "/oauth/map");

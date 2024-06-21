@@ -1,5 +1,6 @@
 package Project.PetWalk.entity;
 
+import Project.PetWalk.dto.OAuthProvider;
 import Project.PetWalk.entity.listener.IAuditable;
 import Project.PetWalk.entity.listener.UserEntityListener;
 import jakarta.persistence.*;
@@ -15,7 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email", "oauthProvider"})
+})
 @EntityListeners(value = {UserEntityListener.class})
 @Entity
 public class UserEntity implements IAuditable {
@@ -26,7 +29,7 @@ public class UserEntity implements IAuditable {
     @Column(length = 50, nullable = false)
     private String nickname;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = true, unique = true)
@@ -43,6 +46,8 @@ public class UserEntity implements IAuditable {
 
     @Column(nullable = false)
     LocalDateTime updatedAt;
+    @Enumerated(EnumType.STRING)
+    private OAuthProvider oauthProvider;
 
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)      //PostEntity 에서 참조하고 있음
     @ToString.Exclude
