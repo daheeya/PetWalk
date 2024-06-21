@@ -28,6 +28,13 @@
 </head>
 <body>
 <div id="map" style="width:100%;height:360px;"></div>
+
+<div id="status"></div>
+<a id="map-link" target="_blank"></a>
+<button id="find-me">내 위치 찾기</button>
+<script src="/mapT.js"></script>
+
+
 <p>
     <em>지도를 마우스로 클릭하면 선 그리기가 시작되고<br>오른쪽 마우스를 클릭하면 선 그리기가 종료됩니다</em>
 </p>
@@ -37,7 +44,7 @@
     <button onclick="location.href='#'">대화</button>
     <button onclick="location.href='#'">마이페이지</button>
 </div>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6fdc5c58865a7a7bdaaca0ddd028119d"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f9516edc641b1b186c400aeee0a6c50c"></script>
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
