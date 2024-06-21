@@ -39,25 +39,25 @@
 </head>
 <body>
 <div class="container">
-    <div class="content-box" th:if="${post != null}">
-        <h1 th:text="${post.title}">Post Details</h1>
-        <p><strong>작성자:</strong> <span th:text="${post.userIdx}"></span></p>
-        <p><strong>내용:</strong> <span th:text="${post.content}"></span></p>
+    <div class="content-box" th:if="${postDto != null}">
+        <h1 th:text="${postDto.title}">Post Details</h1>
+        <p><strong>작성자:</strong> <span th:text="${postDto.userIdx}"></span></p>
+        <p><strong>내용:</strong> <span th:text="${postDto.content}"></span></p>
 
-        <form th:action="@{/post/update}" method="post">
-            <input type="hidden" name="id" th:value="${post.idx}">
+        <form th:action="@{/page/post/update}" method="post">
+            <input type="hidden" name="idx" th:value="${postDto.idx}">
             <div class="form-group">
                 <label for="title">제목</label>
-                <input type="text" id="title" name="title" class="form-control" th:value="${post.title}">
+                <input type="text" id="title" name="title" class="form-control" th:value="${postDto.title}">
             </div>
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea id="content" name="content" class="form-control" rows="5" th:text="${post.content}"></textarea>
+                <textarea id="content" name="content" class="form-control" rows="5" th:text="${postDto.content}"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">수정하기</button>
         </form>
     </div>
-    <div class="content-box" th:if="${post == null}">
+    <div class="content-box" th:if="${postDto == null}">
         <h1>Post Details</h1>
         <p>포스트를 찾을 수 없습니다.</p>
     </div>

@@ -35,16 +35,35 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+        .write-button {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="content-box" th:if="${post != null}">
-        <h1 th:text="${post.title}">Post Details</h1>
-        <p><strong>작성자:</strong> <span th:text="${post.userIdx}"></span></p>
-        <!--        <p><strong>제목:</strong> <span th:text="${post.title}"></span></p>-->
-        <p><strong>내용:</strong> <span th:text="${post.content}"></span></p>
-    </div>
+
+    <form action="/page/post/update" method="get">
+        <div class="content-box" th:if="${post != null}">
+            <h1 th:text="${post.title}">Post Details</h1>
+            <!-- 수정 버튼 추가 -->
+<!--            <div class="rewrite-button">-->
+<!--                <button th:onclick="|location.href='/page/post/update(idx=${post.Idx}, content=${post.content}, title=${post.title})'|" class="btn btn-primary">수정하기</button>-->
+<!--            </div>-->
+            <p><strong>작성자:</strong> <span th:text="${post.userIdx}"></span></p>
+            <!--        <p><strong>제목:</strong> <span th:text="${post.title}"></span></p>-->
+            <p><strong>내용:</strong> <span th:text="${post.content}"></span></p>
+            <input type="hidden" name="idx" th:value="${post.userIdx}">
+            <input type="hidden" name="content" th:value="${post.content}">
+            <input type="hidden" name="title" th:value="${post.title}">
+            <div class="rewrite-button">
+                <input type="submit" th:value="수정하기">
+            </div>
+
+        </div>
+    </form>
     <div class="content-box" th:if="${post == null}">
         <h1>Post Details</h1>
         <p>포스트를 찾을 수 없습니다.</p>

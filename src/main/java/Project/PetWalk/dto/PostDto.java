@@ -40,10 +40,4 @@ public class PostDto {
     @Builder.Default
     private int likeCount = 0;
 
-//    public PostDto(long idx, String title, LocalDateTime createAt) {
-//        this.idx = idx; // 생성자에 idx 필드 추가
-//        this.userIdx = getUserIdx();
-//        this.title = title;
-//        this.createAt = String.valueOf(createAt);
-//    }
 }

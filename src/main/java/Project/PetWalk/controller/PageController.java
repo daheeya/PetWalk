@@ -46,9 +46,17 @@ public class PageController {
         model.addAttribute("posts", posts);
         return "Main";
     }
+    @GetMapping("/post/update")
+    public String updatePostGet(PostDto postDto, Model model) {
+        //postService.updatePost(postDto);
+        model.addAttribute("postDto", postDto);
+        return "rewrite";
+    }
+
     @PostMapping("/post/update")
-    public String updatePost(PostDto postDto) {
+    public String updatePost(PostDto postDto, Model model) {
         postService.updatePost(postDto);
-        return "redirect:/post/" + postDto.getIdx();
+        model.addAttribute("post", postDto);
+        return "PostDtoPage";
     }
 }
