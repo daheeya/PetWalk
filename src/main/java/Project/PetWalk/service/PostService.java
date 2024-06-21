@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -128,5 +129,14 @@ public class PostService {
                         .content(postEntity.getContent())
                         .createAt(String.valueOf(postEntity.getCreateAt()))
                         .build();
+    }
+    public void updatePost(PostDto postDto) {
+        Optional<PostEntity> postEntityOptional = postRepository.findById(postDto.getIdx());
+        if (postEntityOptional.isPresent()) {
+            PostEntity postEntity = postEntityOptional.get();
+            postEntity.setTitle(postDto.getTitle());
+            postEntity.setContent(postDto.getContent());
+            postRepository.save(postEntity);
+        }
     }
 }

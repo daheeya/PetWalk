@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Open Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .content-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="content-box" th:if="${post != null}">
+        <h1 th:text="${post.title}">Post Details</h1>
+        <p><strong>작성자:</strong> <span th:text="${post.userIdx}"></span></p>
+        <p><strong>내용:</strong> <span th:text="${post.content}"></span></p>
+
+        <form th:action="@{/post/update}" method="post">
+            <input type="hidden" name="id" th:value="${post.idx}">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" class="form-control" th:value="${post.title}">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea id="content" name="content" class="form-control" rows="5" th:text="${post.content}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">수정하기</button>
+        </form>
+    </div>
+    <div class="content-box" th:if="${post == null}">
+        <h1>Post Details</h1>
+        <p>포스트를 찾을 수 없습니다.</p>
+    </div>
+</div>
+</body>
+</html>

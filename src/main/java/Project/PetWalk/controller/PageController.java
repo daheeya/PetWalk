@@ -46,4 +46,9 @@ public class PageController {
         model.addAttribute("posts", posts);
         return "Main";
     }
+    @PostMapping("/post/update")
+    public String updatePost(PostDto postDto) {
+        postService.updatePost(postDto);
+        return "redirect:/post/" + postDto.getIdx();
+    }
 }
