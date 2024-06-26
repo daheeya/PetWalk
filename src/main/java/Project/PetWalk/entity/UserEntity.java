@@ -22,28 +22,44 @@ import java.util.List;
 @EntityListeners(value = {UserEntityListener.class})
 @Entity
 public class UserEntity implements IAuditable {
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @Setter
+    @Getter
     @Column(length = 50, nullable = false)
     private String nickname;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private String email;
 
+    @Setter
+    @Getter
     @Column(nullable = true, unique = true)
     private String phoneNumber;
 
 
+    @Setter
+    @Getter
     private int point;
 
+    @Setter
+    @Getter
     @Column(nullable = true)
     private String address;
 
+    @Setter
+    @Getter
     @Column(nullable = false, updatable = false)
     LocalDateTime createdAt;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)

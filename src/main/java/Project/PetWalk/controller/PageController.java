@@ -1,7 +1,9 @@
 package Project.PetWalk.controller;
 
 import Project.PetWalk.dto.PostDto;
+import Project.PetWalk.dto.UserDto;
 import Project.PetWalk.service.PostService;
+import Project.PetWalk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import java.util.List;
 @Slf4j
 public class PageController {
     private final PostService postService;
+    private final UserService userService;
 
     @GetMapping("/post/write")
     public String postDto() {
@@ -23,7 +26,7 @@ public class PageController {
     }
 
     @PostMapping("/post/write/content")
-    public String postTest(@ModelAttribute PostDto postDto, Model model) {
+    public String afterWrite(@ModelAttribute PostDto postDto, Model model) {
         postService.writePost(postDto);
         log.info("{}", postDto);
         model.addAttribute("dto", postDto);
@@ -58,5 +61,16 @@ public class PageController {
         postService.updatePost(postDto);
         model.addAttribute("post", postDto);
         return "PostDtoPage";
+    }
+
+    @GetMapping("/user/{id}")
+    public String getUserById(@RequestParam("userIdx") Long userIdx, Model model) {
+        UserDto userDto = userService.getUserById(userIdx);
+        if (userDto != null) {
+            model.addAttribute("user", userDto);
+            return "myPage";
+        } else {
+            return "error";
+        }
     }
 }

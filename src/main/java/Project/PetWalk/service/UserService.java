@@ -3,6 +3,7 @@ package Project.PetWalk.service;
 import Project.PetWalk.dto.KakaoUserInfo;
 import Project.PetWalk.dto.NaverUserInfo;
 import Project.PetWalk.dto.OAuthProvider;
+import Project.PetWalk.dto.UserDto;
 import Project.PetWalk.entity.UserEntity;
 import Project.PetWalk.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -67,6 +69,19 @@ public class UserService {
                 .build();
 
         return userRepository.save(userEntity);
+    }
+    public UserDto getUserById(Long id) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isPresent()) {
+            UserDto userDto = new UserDto();
+            userDto.setIdx(userEntity.get().getIdx());
+            userDto.setUsername(userEntity.get().getNickname());
+            userDto.setEmail(userEntity.get().getEmail());
+            userDto.setPhoneNumber(userEntity.get().getPhoneNumber());
+            return userDto;
+        } else {
+            return null;
+        }
     }
 }
 
