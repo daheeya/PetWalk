@@ -41,6 +41,11 @@ public class UserService {
         String email = naverUserInfo.getResponse().getEmail();
         String phon_number = naverUserInfo.getResponse().getMobile();
 
+        if (isUserExists(email, OAuthProvider.NAVER)) {
+            log.warn("이미 등록된 사용자입니다: {}", email);
+            return null; // 이미 등록된 사용자일 경우 저장하지 않고 null을 반환하거나 다른 처리를 수행할 수 있습니다.
+        }
+
         UserEntity userEntity = UserEntity.builder()
                 .nickname(nickname)
                 .email(email)
