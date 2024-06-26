@@ -32,7 +32,7 @@ public class UserService {
     }
     @Transactional(readOnly = true)
     public boolean isUserExists(String email, OAuthProvider oauthProvider) {
-        return userRepository.existsByEmailAndOauthProvider(email, oauthProvider);
+        return userRepository.existsByEmailAndServiceProvider(email, oauthProvider);
     }
 
     @Transactional
@@ -45,7 +45,7 @@ public class UserService {
                 .nickname(nickname)
                 .email(email)
                 .phoneNumber(phon_number)
-                .oauthProvider(OAuthProvider.NAVER)
+                .serviceProvider(OAuthProvider.NAVER)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -63,7 +63,7 @@ public class UserService {
         UserEntity userEntity = UserEntity.builder()
                 .nickname(nickname)
                 .email(email)
-                .oauthProvider(OAuthProvider.KAKAO)
+                .serviceProvider(OAuthProvider.KAKAO)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

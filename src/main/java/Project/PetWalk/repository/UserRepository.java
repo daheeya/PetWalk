@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    boolean existsByEmailAndOauthProvider(String email, OAuthProvider oauthProvider);
+    boolean existsByEmailAndServiceProvider(String email, OAuthProvider serviceProvider);
 }

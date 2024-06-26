@@ -22,6 +22,8 @@ public class NaverTokenDto {
     private int expiresIn;
     @JsonProperty("scope")
     private String scope;
+    @JsonProperty(value = "service_provider")
+    private String serviceProvider	;
 
 }
 

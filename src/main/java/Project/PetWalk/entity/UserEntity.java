@@ -40,7 +40,7 @@ public class UserEntity implements IAuditable {
 
     @Setter
     @Getter
-    @Column(nullable = true, unique = true)
+    @Column(nullable = true)
     private String phoneNumber;
 
 
@@ -63,7 +63,8 @@ public class UserEntity implements IAuditable {
     @Column(nullable = false)
     LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
-    private OAuthProvider oauthProvider;
+    @Column(nullable = false)
+    private OAuthProvider serviceProvider;
 
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true)      //PostEntity 에서 참조하고 있음
     @ToString.Exclude

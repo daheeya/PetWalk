@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket 채팅</title>
+</head>
+<body>
+<div id="chat-box" style="height: 300px; overflow-y: scroll;"></div>
+<input type="text" id="message" placeholder="메시지 입력...">
+<button onclick="sendMessage()">전송</button>
+
+<script>
+    const socket = new WebSocket('ws://localhost:8080');
+
+    // 웹 소켓 연결 이벤트
+    socket.onopen = function () {
+        console.log('웹 소켓 서버와 연결되었습니다.');
+    };
+
+    // 웹 소켓 메시지 수신
+    socket.onmessage = function (event) {
+        const receivedMessage = event.data;
+        displayMessage(receivedMessage);
+    };
+
+    // 웹 소켓 연결 종료
+    socket.onclose = function () {
+        console.log('웹 소켓 연결이 종료되었습니다.');
+    };
+
+    // 오류 발생
+    socket.onerror = function (error) {
+        console.error('웹 소켓 오류 발생:', error);
+    };
+
+    // 메시지 전송 함수
+    function sendMessage() {
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        socket.send(message);
+
+        // 전송 후 입력 필드 초기화
+        messageInput.value = '';
+    }
+
+    // 화면에 메시지 출력 함수
+    function displayMessage(message) {
+        const chatBox = document.getElementById('chat-box');
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        chatBox.appendChild(messageElement);
+
+        // 스크롤을 항상 아래로 유지
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+</script>
+</body>
+</html>

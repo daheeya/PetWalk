@@ -19,33 +19,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
-@RestController
-@RequestMapping("/users")
-public class UserController {
-
-    private final UserService userService;
-    private final NaverLoginService naverLoginService;
-
-    @Autowired
-    public UserController(UserService userService, NaverLoginService naverLoginService) {
-        this.userService = userService;
-        this.naverLoginService = naverLoginService;
-    }
-
-    @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-
-    @GetMapping("/naver/callback")
-    public ResponseEntity<String> naverCallback(@RequestParam String code, @RequestParam String state) {
-        LoginParamsDto loginParamsDto = new LoginParamsDto();
-        loginParamsDto.setCode(code);
-        loginParamsDto.setState(state);
-        String accessToken = naverLoginService.requestAccessToken(loginParamsDto);
-        NaverUserInfo naverUserInfo = naverLoginService.findMe(accessToken);
-        return ResponseEntity.ok("Naver login successful!");
-    }
-}
+//@Slf4j
+//@RestController
+//@RequestMapping("/users")
+//public class UserController {
+//
+//    private final UserService userService;
+//    private final NaverLoginService naverLoginService;
+//
+//    @Autowired
+//    public UserController(UserService userService, NaverLoginService naverLoginService) {
+//        this.userService = userService;
+//        this.naverLoginService = naverLoginService;
+//    }
+//
+//    @GetMapping
+//    public List<UserEntity> getAllUsers() {
+//        return userService.getAllUsers();
+//    }
+//
+//
+//    @GetMapping("/naver/callback")
+//    public ResponseEntity<String> naverCallback(@RequestParam String code, @RequestParam String state) {
+//        LoginParamsDto loginParamsDto = new LoginParamsDto();
+//        loginParamsDto.setCode(code);
+//        loginParamsDto.setState(state);
+//        String accessToken = naverLoginService.requestAccessToken(loginParamsDto);
+//        NaverUserInfo naverUserInfo = naverLoginService.findMe(accessToken);
+//        return ResponseEntity.ok("Naver login successful!");
+//    }
+//}
