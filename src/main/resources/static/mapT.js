@@ -5,6 +5,8 @@ function geoFindMe() {
     mapLink.href = "";
     mapLink.textContent = "";
 
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
     function success(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
@@ -12,6 +14,17 @@ function geoFindMe() {
         status.textContent = "";
         mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
         mapLink.textContent = `위도: ${latitude} °, 경도: ${longitude} °`;
+
+        var locPosition = new kakao.maps.LatLng(latitude, longitude); // 사용자의 현재 위치 좌표
+        map.setCenter(locPosition); // 지도 중심을 사용자의 현재 위치로 변경합니다
+
+        // 현재 위치에 표시할 마커
+        var marker = new kakao.maps.Marker({
+            // 현재위치에 마커를 생성합니다
+            position: locPosition
+        });
+        // 지도에 마커를 표시합니다
+        marker.setMap(map);
     }
 
     function error() {
