@@ -1,7 +1,9 @@
 package Project.PetWalk.controller;
 
+import Project.PetWalk.dto.ChatRoom;
 import Project.PetWalk.dto.PostDto;
 import Project.PetWalk.dto.UserDto;
+import Project.PetWalk.service.ChatService;
 import Project.PetWalk.service.PostService;
 import Project.PetWalk.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,8 @@ public class PageController {
         model.addAttribute("posts", posts);
         return "Main";
     }
+
+
     @GetMapping("/post/update")
     public String updatePostGet(PostDto postDto, Model model) {
         //postService.updatePost(postDto);
@@ -61,9 +65,9 @@ public class PageController {
     }
 
     @GetMapping("/user/{id}")
-    public String getUserById(@RequestParam("userIdx") Long userIdx, Model model) {
+    public String getUserById(@PathVariable(value = "userIdx") Long userIdx, Model model) {
         UserDto userDto = userService.getUserById(userIdx);
             model.addAttribute("user", userDto);
-            return "myPage";
+            return "MyPage";
     }
 }
