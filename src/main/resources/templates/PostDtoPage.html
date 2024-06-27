@@ -44,7 +44,6 @@
 </head>
 <body>
 <div class="container">
-    <!-- 뒤로가기 버튼 추가 -->
     <div class="back-button">
         <button onclick="location.href='/page/main'" class="btn btn-primary">뒤로가기</button>
     </div>
@@ -52,12 +51,7 @@
     <form action="/page/post/update" method="get">
         <div class="content-box" th:if="${post != null}">
             <h1 th:text="${post.title}">Post Details</h1>
-            <!-- 수정 버튼 추가 -->
-<!--            <div class="rewrite-button">-->
-<!--                <button th:onclick="|location.href='/page/post/update(idx=${post.Idx}, content=${post.content}, title=${post.title})'|" class="btn btn-primary">수정하기</button>-->
-<!--            </div>-->
             <p><strong>작성자:</strong> <span th:text="${post.userIdx}"></span></p>
-            <!--        <p><strong>제목:</strong> <span th:text="${post.title}"></span></p>-->
             <p><strong>내용:</strong> <span th:text="${post.content}"></span></p>
             <input type="hidden" name="idx" th:value="${post.userIdx}">
             <input type="hidden" name="content" th:value="${post.content}">
@@ -65,9 +59,36 @@
             <div class="rewrite-button">
                 <input type="submit" th:value="수정하기">
             </div>
-
         </div>
     </form>
+
+    <!-- 댓글 작성 폼 -->
+    <div class="content-box">
+        <h2>댓글 작성</h2>
+        <form action="/page/comments" method="post">
+            <input type="hidden" name="postIdx" th:value="${post.idx}">
+            <div class="form-group">
+                <label for="userIdx">작성자 ID</label>
+                <input type="text" id="userIdx" name="userIdx" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea id="content" name="content" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">댓글 작성</button>
+        </form>
+    </div>
+
+    <!-- 댓글 리스트 -->
+    <div class="content-box">
+        <h2>댓글</h2>
+        <div th:each="comment : ${comments}">
+            <p><strong>작성자:</strong> <span th:text="${comment.userIdx}"></span></p>
+            <p th:text="${comment.content}"></p>
+            <hr>
+        </div>
+    </div>
+
     <div class="content-box" th:if="${post == null}">
         <h1>Post Details</h1>
         <p>포스트를 찾을 수 없습니다.</p>

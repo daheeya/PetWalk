@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,6 +22,10 @@ public class CommentEntity {
     private String content;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
     @ManyToOne(fetch = FetchType.LAZY)       // PostEntity.idx 를 참조
     @JoinColumn(name = "post_idx")
     private PostEntity postEntity;

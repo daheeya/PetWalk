@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,6 +56,9 @@ public class PostService {
     //tagEntity 생성
     private TagEntity makeNewTagEntity(PostEntity post,String keyword){
         return TagEntity.builder().postEntity(post).keyword(keyword).build();
+    }
+    public List<CommentEntity> findCommentsByPostId(Long postIdx) {
+        return commentRepository.getAllCommentByPostIdx(postIdx);
     }
 
     @Transactional
@@ -139,4 +143,27 @@ public class PostService {
             postRepository.save(postEntity);
         }
     }
+
+//    public CommentDto addComment(Long postIdx, Long userIdx, String content) {
+//        Optional<PostEntity> postEntity = postRepository.findById(postIdx);
+//        if (postEntity.isPresent()) {
+//            CommentEntity commentEntity = CommentEntity.builder()
+//                    .idx(postEntity.get().getIdx())
+//                    .idx(userIdx)
+//                    .content(content)
+//                    .createdAt(LocalDateTime.now())
+//                    .build();
+//            commentEntity = commentRepository.save(commentEntity);
+//
+//            return CommentDto.builder()
+//                    .idx(commentEntity.getIdx())
+//                    .idx(postEntity.get().getIdx())
+//                    .idx(userIdx)
+//                    .content(content)
+//                    .createdAt(String.valueOf(commentEntity.getCreatedAt()))
+//                    .build();
+//        } else {
+//            throw new RuntimeException("Post not found");
+//        }
+//    }
 }
