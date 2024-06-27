@@ -29,7 +29,7 @@ public class PageController {
     public String afterWrite(@ModelAttribute PostDto postDto, Model model) {
         postService.writePost(postDto);
         log.info("{}", postDto);
-        model.addAttribute("dto", postDto);
+        model.addAttribute("afterwrite_dto", postDto);
         return "afterwrite";
     }
 
