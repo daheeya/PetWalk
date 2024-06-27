@@ -29,7 +29,6 @@ public class WalkService {
                 , walkEntity.getEndWalkTime()
                 , walkEntity.getStepCount()
                 , walkEntity.getCalories()
-                , walkEntity.getPath().toString()
                 , walkEntity.getUserEntity().getIdx()
                 , walkEntity.getPetEntity().getIdx());
     }

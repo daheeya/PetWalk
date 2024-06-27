@@ -42,12 +42,11 @@ class WalkServiceTest {
         LocalDateTime endWalkTime = LocalDateTime.now().plusHours(1);
         int stepCount = 1000;
         int calories = 100;
-        String path = createPath().toString();
         Long userIdx = 1L; // 실제 사용자 ID로 교체
         Long petIdx = 1L;  // 실제 애완동물 ID로 교체
 
         // 네이티브 쿼리 메서드 호출
-        walkRepository.saveWalkNative(distance, startWalkTime, endWalkTime, stepCount, calories, path, userIdx, petIdx);
+        walkRepository.saveWalkNative(distance, startWalkTime, endWalkTime, stepCount, calories, userIdx, petIdx);
 
     }
 }

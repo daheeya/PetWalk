@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.MultiPoint;
@@ -47,9 +49,6 @@ public class WalkEntity {
     @Column
     private int calories;
 
-    @Column(columnDefinition = "MULTIPOINT")
-    private MultiPoint path;  // TYPENAME_MULTIPOINT
-
     @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     private UserEntity userEntity;
@@ -57,4 +56,9 @@ public class WalkEntity {
     @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_idx")
     private PetEntity petEntity;
+
+    @OneToMany(mappedBy = "walkEntity", orphanRemoval = true)       //PathEntity 에서 참조하고 있음
+    @ToString.Exclude
+    @Builder.Default
+    private List<PathEntity> pathEntities = new ArrayList<>();
 }
