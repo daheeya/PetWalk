@@ -1,5 +1,6 @@
 package Project.PetWalk.repository;
 
+import Project.PetWalk.dto.OAuthProvider;
 import Project.PetWalk.entity.UserEntity;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,10 @@ public class UserRepositoryTest {
     @Transactional
     @Rollback(value = false)
    void test(){
-       var user1 = UserEntity.builder().idx(1L).nickname("cooper")
-               .address("daegu").email("cooper091677@gmail.com").phoneNumber("010-1234-5678").build();
+       var user1 = UserEntity.builder().idx(2L).nickname("cooper")
+               .address("daegu").email("cooper091677@gmail.com").phoneNumber("010-1234-5678").
+               serviceProvider(OAuthProvider.KAKAO).build();
         System.out.println();
        userRepository.save(user1);
    }
-
 }

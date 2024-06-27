@@ -1,16 +1,15 @@
 package Project.PetWalk.entity;
 
 import Project.PetWalk.entity.listener.DefaultListener;
+import Project.PetWalk.entity.listener.UserEntityListener;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.MultiPoint;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -19,7 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EntityListeners(value = DefaultListener.class)
+@EntityListeners(value = {DefaultListener.class})
 @Table(name = "walk")
 @Entity
 public class WalkEntity {
@@ -30,12 +29,17 @@ public class WalkEntity {
     @Column(name= "distance")
     private int distance;
 
-    @Column(name = "start_walk_time" , nullable = false)
+    @Column(name = "start_walk_time" , nullable = true)
+    @Setter
+    @Getter
     @CreatedDate
     private LocalDateTime startWalkTime;
 
     @Column(name = "end_walk_time", nullable = true)
-    private String endWalkTime;
+    @Setter
+    @Getter
+    @CreatedDate
+    private LocalDateTime endWalkTime;
 
     @Column(name = "step_count" , nullable = false)
     private int stepCount;
@@ -43,14 +47,14 @@ public class WalkEntity {
     @Column
     private int calories;
 
-    @Column
+    @Column(columnDefinition = "MULTIPOINT")
     private MultiPoint path;  // TYPENAME_MULTIPOINT
 
-    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     private UserEntity userEntity;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_idx")
     private PetEntity petEntity;
 }

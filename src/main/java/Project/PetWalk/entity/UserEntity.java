@@ -62,6 +62,7 @@ public class UserEntity implements IAuditable {
     @Getter
     @Column(nullable = false)
     LocalDateTime updatedAt;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OAuthProvider serviceProvider;
@@ -99,7 +100,7 @@ public class UserEntity implements IAuditable {
     @Transient
     private boolean isValid;
 
-    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)
+    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)       //WalkEntity 에서 참조하고 있음
     @ToString.Exclude
     @Builder.Default
     private List<WalkEntity> walkEntities = new ArrayList<>();
