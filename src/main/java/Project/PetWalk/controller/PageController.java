@@ -36,9 +36,6 @@ public class PageController {
     @GetMapping("/post/write/content")
     public String getPostContent(@RequestParam("postIdx") Long postIdx, Model model) {
         PostDto post = postService.getPostById(postIdx);
-        if (post == null) {
-            throw new RuntimeException("Post not found with id: " + postIdx);
-        }
         model.addAttribute("post", post);
         return "PostDtoPage";
     }
@@ -66,11 +63,7 @@ public class PageController {
     @GetMapping("/user/{id}")
     public String getUserById(@RequestParam("userIdx") Long userIdx, Model model) {
         UserDto userDto = userService.getUserById(userIdx);
-        if (userDto != null) {
             model.addAttribute("user", userDto);
             return "myPage";
-        } else {
-            return "error";
-        }
     }
 }
