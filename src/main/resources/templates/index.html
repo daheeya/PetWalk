@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WebSocket Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .button-container {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px 0;
+            z-index: 1000; /* 버튼이 다른 요소 위에 표시되도록 z-index 설정 */
+        }
+        .button-container button {
+            margin: 0 10px;
+        }
+        /* 추가된 스타일: 본문 내용과 버튼 사이의 간격을 조정 */
+        #chat {
+            margin-bottom: 80px; /* 버튼이 가리지 않도록 본문 아래 여백 추가 */
+        }
+    </style>
+</head>
+<body>
+<div>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button onclick="connect()">Connect</button>
+</div>
+<div>
+    <input type="text" id="room" placeholder="Enter room name" />
+    <button onclick="joinRoom()">Join Room</button>
+</div>
+<div>
+    <input type="text" id="message" placeholder="Enter your message" />
+    <button onclick="sendMessage()">Send</button>
+</div>
+<div id="chat">
+    <!-- Messages will be displayed here -->
+</div>
+
+<script>
+    var stompClient = null;
+    var currentRoom = null;
+
+    function connect() {
+        var socket = new SockJS('/ws/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+        });
+    }
+
+    function joinRoom() {
+        currentRoom = $("#room").val();
+        stompClient.subscribe('/topic/' + currentRoom, function (message) {
+            showMessage(JSON.parse(message.body));
+        });
+
+        if(stompClient) {
+            var chatMessage = {
+                sender: $("#username").val(),
+                content: "enter the room",
+                room: currentRoom
+            };
+            stompClient.send("/app/chat.addUser", {}, JSON.stringify(chatMessage));
+        }
+    }
+
+    function sendMessage() {
+        var messageContent = $("#message").val();
+        if(messageContent && stompClient) {
+            var chatMessage = {
+                sender: $("#username").val(),
+                content: messageContent,
+                room: currentRoom
+            };
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        }
+    }
+
+    function showMessage(message) {
+        $("#chat").append("<div>" + message.sender + ": " + message.content + "</div>");
+    }
+</script>
+<div class="button-container">
+    <button onclick="location.href='/oauth/map'" class="btn btn-primary">지도</button>
+    <button onclick="location.href='/page/main'" class="btn btn-primary">커뮤니티</button>
+    <button onclick="location.href='/chat'" class="btn btn-primary">채팅</button>
+    <button onclick="location.href='/page/user/123'" class="btn btn-primary">마이페이지</button>
+</div>
+
+</body>
+</html>
