@@ -1,9 +1,7 @@
 package Project.PetWalk.service;
 
-import Project.PetWalk.dto.KakaoUserInfo;
-import Project.PetWalk.dto.NaverUserInfo;
-import Project.PetWalk.dto.OAuthProvider;
-import Project.PetWalk.dto.UserDto;
+import Project.PetWalk.dto.*;
+import Project.PetWalk.entity.PostEntity;
 import Project.PetWalk.entity.UserEntity;
 import Project.PetWalk.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -77,16 +75,12 @@ public class UserService {
     }
     public UserDto getUserById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
-        if (userEntity.isPresent()) {
-            UserDto userDto = new UserDto();
-            userDto.setIdx(userEntity.get().getIdx());
-            userDto.setUsername(userEntity.get().getNickname());
-            userDto.setEmail(userEntity.get().getEmail());
-            userDto.setPhoneNumber(userEntity.get().getPhoneNumber());
-            return userDto;
-        } else {
-            return null;
-        }
+        return userEntity.map(entity -> UserDto.builder()
+                .idx(entity.getIdx())
+                .username(entity.getNickname())
+                .email(entity.getEmail())
+                .phoneNumber(entity.getPhoneNumber())
+                .build()).orElse(null);
     }
 }
 
