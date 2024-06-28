@@ -25,7 +25,7 @@ public class PetEntity {
     @Column(length = 50)
     private int age;
 
-    @ManyToOne(fetch = FetchType.LAZY)   // UserEntity.idx 참조
+    @ManyToOne(fetch = FetchType.EAGER)   // UserEntity.idx 참조
     @JoinColumn(name = "user_idx")
     private UserEntity userEntity;
 

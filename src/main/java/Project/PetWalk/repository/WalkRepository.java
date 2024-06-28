@@ -12,17 +12,5 @@ import java.time.LocalDateTime;
 @Repository
 public interface WalkRepository extends JpaRepository<WalkEntity, Long> {
 
-    String str = "INSERT INTO walk (distance, start_walk_time, end_walk_time, step_count, calories, user_idx, pet_idx) " +
-            "VALUES (:distance, :startWalkTime, :endWalkTime, :stepCount, :calories, :userIdx, :petIdx)";
-    @Modifying
-    @Transactional
-    @Query(value = str, nativeQuery = true)
-    void saveWalkNative(@Param("distance") int distance,
-                        @Param("startWalkTime") LocalDateTime startWalkTime,
-                        @Param("endWalkTime") LocalDateTime endWalkTime,
-                        @Param("stepCount") int stepCount,
-                        @Param("calories") int calories,
-                        @Param("userIdx") Long userIdx,
-                        @Param("petIdx") Long petIdx);
 }
 

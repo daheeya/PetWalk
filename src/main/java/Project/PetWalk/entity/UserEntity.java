@@ -77,7 +77,7 @@ public class UserEntity implements IAuditable {
     @Builder.Default
     private List<CommentEntity> commentEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)       //CommentEntity 에서 참조하고 있음
+    @OneToMany(mappedBy = "userEntity", orphanRemoval = true)       //PetEntity 에서 참조하고 있음
     @ToString.Exclude
     @Builder.Default
     private List<PetEntity> petEntities = new ArrayList<>();

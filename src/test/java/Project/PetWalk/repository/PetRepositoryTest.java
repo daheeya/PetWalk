@@ -25,7 +25,7 @@ class PetRepositoryTest {
         var pet= PetEntity.builder().idx(1L)
                 .age(1)
                 .name("koko")
-                .userEntity(userRepository.findById(2L).get())
+                .userEntity(userRepository.findById(1L).get())
                 .build();
         petRepository.save(pet);
     }

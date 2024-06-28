@@ -1,6 +1,5 @@
 package Project.PetWalk.entity;
 
-import Project.PetWalk.entity.listener.DefaultListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class PathDto {
     private double latitude;
     private double longitude;
+    private long walkIdx;
 }

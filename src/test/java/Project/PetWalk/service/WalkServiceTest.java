@@ -46,7 +46,7 @@ class WalkServiceTest {
         Long petIdx = 1L;  // 실제 애완동물 ID로 교체
 
         // 네이티브 쿼리 메서드 호출
-        walkRepository.saveWalkNative(distance, startWalkTime, endWalkTime, stepCount, calories, userIdx, petIdx);
+        //walkRepository.saveWalkNative(distance, startWalkTime, endWalkTime, stepCount, calories, userIdx, petIdx);
 
     }
 }

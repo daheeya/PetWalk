@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.Type;
-import org.locationtech.jts.geom.MultiPoint;
 import org.springframework.data.annotation.CreatedDate;
 
 @Slf4j
@@ -28,10 +26,10 @@ public class WalkEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column(name= "distance")
-    private int distance;
+    @Column(name = "distance")
+    private double distance;
 
-    @Column(name = "start_walk_time" , nullable = true)
+    @Column(name = "start_walk_time", nullable = false)
     @Setter
     @Getter
     @CreatedDate
@@ -43,11 +41,11 @@ public class WalkEntity {
     @CreatedDate
     private LocalDateTime endWalkTime;
 
-    @Column(name = "step_count" , nullable = false)
+    @Column(name = "step_count", nullable = false)
     private int stepCount;
 
     @Column
-    private int calories;
+    private double calories;
 
     @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
