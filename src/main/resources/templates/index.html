@@ -29,6 +29,7 @@
 <div>
     <input type="text" id="username" placeholder="Enter your name" />
     <button onclick="connect()">Connect</button>
+    <button onclick="disconnect()">Disconnect</button>
 </div>
 <div>
     <input type="text" id="room" placeholder="Enter room name" />
@@ -52,6 +53,13 @@
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
         });
+    }
+
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+            console.log("Disconnected");
+        }
     }
 
     function joinRoom() {
