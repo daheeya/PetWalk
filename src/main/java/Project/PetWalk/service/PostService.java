@@ -120,6 +120,11 @@ public class PostService {
         return postEntities.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+    public List<CommentDto> getAllComments() {
+        List<CommentEntity> commentEntities = commentRepository.findAll();
+        return commentEntities.stream().map(this::convertToCommentDto).collect(Collectors.toList());
+    }
+
     @Transactional
     public PostDto getPostById(Long id) {
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
@@ -133,6 +138,14 @@ public class PostService {
                         .content(postEntity.getContent())
                         .createAt(String.valueOf(postEntity.getCreateAt()))
                         .build();
+    }
+
+    private CommentDto convertToCommentDto(CommentEntity commentEntity){
+        return CommentDto.builder().idx(commentEntity.getIdx())
+                .postIdx(commentEntity.getPostEntity().getIdx())
+                .userIdx(commentEntity.getUserEntity().getIdx())
+                .content(commentEntity.getContent())
+                .build();
     }
     public void updatePost(PostDto postDto) {
         Optional<PostEntity> postEntityOptional = postRepository.findById(postDto.getIdx());

@@ -37,6 +37,7 @@ public class PageController {
     @GetMapping("/post/write/content")
     public String getPostContent(@RequestParam("postIdx") Long postIdx, Model model) {
         PostDto post = postService.getPostById(postIdx);
+        List<CommentDto> comments = postService.getAllComments();
         model.addAttribute("post", post);
         return "PostDtoPage";
     }
