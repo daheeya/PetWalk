@@ -25,6 +25,28 @@ function geoFindMe() {
         });
         // 지도에 마커를 표시합니다
         marker.setMap(map);
+
+        // pathDto 객체 생성
+        const pathDto = {
+            latitude: latitude,
+            longitude: longitude
+        };
+
+        // Send AJAX request to server
+        fetch('/saveLocation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pathDto)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     function error() {
