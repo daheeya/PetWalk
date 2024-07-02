@@ -3,8 +3,10 @@ package Project.PetWalk.controller;
 import Project.PetWalk.dto.CommentDto;
 import Project.PetWalk.dto.PostDto;
 import Project.PetWalk.dto.UserDto;
+import Project.PetWalk.entity.UserEntity;
 import Project.PetWalk.service.PostService;
 import Project.PetWalk.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,7 @@ public class PageController {
         model.addAttribute("posts", posts);
         return "Main";
     }
+
     @GetMapping("/post/update")
     public String updatePostGet(PostDto postDto, Model model) {
         //postService.updatePost(postDto);
@@ -69,10 +72,20 @@ public class PageController {
         return "redirect:/page/post/write/content?postIdx=" + commentDto.getPostIdx();
     }
 
-    @GetMapping("/user/")
-    public String getUserById(@RequestParam("userIdx") Long userIdx, Model model) {
-        UserDto userDto = userService.getUserById(userIdx);
-            model.addAttribute("user", userDto);
-            return "myPage";
+//    @GetMapping("/user")
+//    public String getUserById(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+//        UserDto userDto = userService.getUserById(idx);
+//        model.addAttribute("user", userDto);
+//        return "Mypage";
+//    }
+@GetMapping("/user")
+public String myPage(HttpServletRequest request, Model model) {
+    UserEntity userEntity = (UserEntity) request.getSession().getAttribute("user");
+    if (userEntity != null) {
+        model.addAttribute("user", userEntity);
+        return "Mypage";
+    } else {
+        return "redirect:/home";
     }
+}
 }

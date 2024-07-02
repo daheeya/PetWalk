@@ -1,14 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Page</title>
+  <style>
+    .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.button-container button {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+  </style>
 </head>
 <body>
-<h1>User Information</h1>
-<p>Username: <span th:text="${user.nickname}"></span></p>
-<p>Email: <span th:text="${user.email}"></span></p>
-<p>Phone Number: <span th:text="${user.phoneNumber}"></span></p>
+<div class="container">
+  <h1>마이페이지</h1>
+  <div class="user-info">
+    <p><strong>닉네임:</strong> <span th:text="${user.nickname}"></span></p>
+    <p><strong>이메일:</strong> <span th:text="${user.email}"></span></p>
+    <p><strong>전화번호:</strong> <span th:text="${user.phoneNumber}"></span></p>
+    <p><strong>포인트:</strong> <span th:text="${user.point}"></span></p>
+    <p><strong>주소:</strong> <span th:text="${user.address}"></span></p>
+    <p><strong>가입일:</strong> <span th:text="${user.createdAt}"></span></p>
+    <p><strong>최근 업데이트:</strong> <span th:text="${user.updatedAt}"></span></p>
+  </div>
+
+  <nav>
+    <div class="button-container">
+      <button onclick="location.href='/oauth/map'" class="btn btn-primary">지도</button>
+      <button onclick="location.href='/page/main'" class="btn btn-primary">커뮤니티</button>
+      <button onclick="location.href='/chat'" class="btn btn-primary">채팅</button>
+      <button onclick="location.href='/page/user'" class="btn btn-primary">마이페이지</button>
+    </div>
+  </nav>
+</div>
 </body>
 </html>

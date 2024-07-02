@@ -32,6 +32,10 @@ public class UserService {
     public boolean isUserExists(String email, OAuthProvider oauthProvider) {
         return userRepository.existsByEmailAndServiceProvider(email, oauthProvider);
     }
+    @Transactional(readOnly = true)
+    public Optional<UserEntity> findByEmailAndServiceProvider(String email, OAuthProvider serviceProvider) {
+        return userRepository.findByEmailAndServiceProvider(email, serviceProvider);
+    }
 
     @Transactional
     public UserEntity saveNaverUserInfo(NaverUserInfo naverUserInfo) {
@@ -73,15 +77,17 @@ public class UserService {
 
         return userRepository.save(userEntity);
     }
-    public UserDto getUserById(Long id) {
-        Optional<UserEntity> userEntity = userRepository.findById(id);
-        return userEntity.map(entity -> UserDto.builder()
-                .idx(entity.getIdx())
-                .username(entity.getNickname())
-                .email(entity.getEmail())
-                .phoneNumber(entity.getPhoneNumber())
-                .build()).orElse(null);
-    }
+//    public UserDto getUserById(Long id) {
+//        Optional<UserEntity> userEntity = userRepository.findById(id);
+//        return userEntity.map(entity -> UserDto.builder()
+//                .idx(entity.getIdx())
+//                .username(entity.getNickname())
+//                .email(entity.getEmail())
+//                .phoneNumber(entity.getPhoneNumber())
+//                .address(entity.getAddress())
+//                .point(entity.getPoint())
+//                .build()).orElse(null);
+//    }
 }
 
 

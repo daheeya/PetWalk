@@ -37,7 +37,10 @@ dependencies {
 	// geometry
 	implementation 'org.locationtech.jts:jts-core:1.19.0'
 }
-
+tasks.named('bootRun') {
+	// JVM 옵션 추가
+	jvmArgs = ['-Djava.security.egd=file:/dev/./urandom']
+}
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-base:latest'
 }

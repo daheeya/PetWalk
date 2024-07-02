@@ -3,8 +3,10 @@ package Project.PetWalk.controller;
 import Project.PetWalk.dto.KakaoUserInfo;
 import Project.PetWalk.dto.LoginParamsDto;
 import Project.PetWalk.dto.OAuthProvider;
+import Project.PetWalk.entity.UserEntity;
 import Project.PetWalk.service.KakaoLoginService;
 import Project.PetWalk.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,10 +41,12 @@ public class KakaoLoginController {
         System.out.println(kakao);
         response.sendRedirect(kakaoLoginService.kakaoAuthUrl());
     }
+
     // Kakao redirect URL
 
+
     @GetMapping(path = "/kakao")
-    public ResponseEntity<String> callbackKakao(LoginParamsDto loginParamsDto) {
+    public ResponseEntity<String> callbackKakao(LoginParamsDto loginParamsDto, HttpServletRequest request) {
         log.info("code={}, state={}", loginParamsDto.getCode(), loginParamsDto.getState());
         String token = kakaoLoginService.requestAccessToken(loginParamsDto);
         KakaoUserInfo kakaoUserInfo = kakaoLoginService.findMe(token);
@@ -49,13 +54,16 @@ public class KakaoLoginController {
         if (kakaoUserInfo != null) {
             String email = kakaoUserInfo.getKakaoAccount().getEmail();
             if (userService.isUserExists(email, OAuthProvider.KAKAO)) {
-                // 유저가 이미 존재하면 바로 map 페이지로 리다이렉트
+                // 유저가 이미 존재하면 유저 정보를 세션에 저장하고 바로 map 페이지로 리다이렉트
+                UserEntity user = userService.findByEmailAndServiceProvider(email, OAuthProvider.KAKAO).orElse(null);
+                request.getSession().setAttribute("user", user);
                 HttpHeaders headers = new HttpHeaders();
                 headers.add("Location", "/oauth/map");
                 return new ResponseEntity<>(headers, HttpStatus.FOUND);
             } else {
-                // 유저가 존재하지 않으면 정보 저장 후 map 페이지로 리다이렉트
-                userService.saveKakaoUserInfo(kakaoUserInfo);
+                // 유저가 존재하지 않으면 정보 저장 후 유저 정보를 세션에 저장하고 map 페이지로 리다이렉트
+                UserEntity user = userService.saveKakaoUserInfo(kakaoUserInfo);
+                request.getSession().setAttribute("user", user);
                 HttpHeaders headers = new HttpHeaders();
                 headers.add("Location", "/oauth/map");
                 return new ResponseEntity<>(headers, HttpStatus.FOUND);
